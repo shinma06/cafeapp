@@ -1,71 +1,36 @@
-# Docker Compose 最新形式（versionフィールドは非推奨のため削除）
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: cafeapp-mysql
-    restart: unless-stopped
+  postgres:
+    image: postgres:16-alpine
+    container_name: cafe-app-postgres
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-cafeapp}
-      MYSQL_USER: ${MYSQL_USER:-shinma}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-0103}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-0103}
-      TZ: Asia/Tokyo
+      POSTGRES_DB: cafe_app
+      POSTGRES_USER: shinma
+      POSTGRES_PASSWORD: "0103"
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+      - postgres_data:/var/lib/postgresql/data
     ports:
-      - "${MYSQL_PORT:-3306}:3306"
+      - "5432:5432"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-0103}"]
-      interval: 10s
-      timeout: 5s
+      test: ["CMD-SHELL", "pg_isready -U shinma -d cafe_app"]
+      interval: 3s
+      timeout: 3s
       retries: 5
-      start_period: 30s
-    networks:
-      - cafeapp-network
 
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: cafeapp-web
-    restart: unless-stopped
-    command: ./combined_script.sh
+    build: .
+    container_name: cafe-app-web
+    command: python manage.py runserver 0.0.0.0:8000
     environment:
-      DJANGO_SETTINGS_MODULE: cafeapp.settings
-      DATABASE_ENGINE: django.db.backends.mysql
-      DATABASE_NAME: ${MYSQL_DATABASE:-cafeapp}
-      DATABASE_USER: ${MYSQL_USER:-shinma}
-      DATABASE_PASSWORD: ${MYSQL_PASSWORD:-0103}
-      DATABASE_HOST: mysql
-      DATABASE_PORT: 3306
-      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-django-insecure-t+e45f!4$$b4@z*rf-v2#m^+!^%3c3=mkks03ukq^v_ndbhh91n}
-      DJANGO_DEBUG: ${DJANGO_DEBUG:-True}
-      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-*}
+      DATABASE_URL: postgres://shinma:0103@postgres:5432/cafe_app
+      DJANGO_DEBUG: "True"
+      DJANGO_SECRET_KEY: django-insecure-dev-key-change-in-production
     volumes:
-      - .:/cafeapp
-      - static_volume:/cafeapp/static
-      - media_volume:/cafeapp/media
+      - .:/app
     ports:
-      - "${WEB_PORT:-8000}:8000"
+      - "8000:8000"
     depends_on:
-      mysql:
+      postgres:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD", "python", "manage.py", "check"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    networks:
-      - cafeapp-network
 
 volumes:
-  mysql_data:
-    driver: local
-  static_volume:
-  media_volume:
-
-networks:
-  cafeapp-network:
-    driver: bridge
+  postgres_data:

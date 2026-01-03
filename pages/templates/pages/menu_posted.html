@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}WCB Cafe - MENU POSTED{% endblock title %}
+{% block title %}Cafe-App - MENU POSTED{% endblock title %}
 
 {% block id %}accounts{% endblock id %}
 
-{% block wrapper %}home-content{% endblock wrapper %}
+{% block wrapper %}home-content text-center mt-[10%]{% endblock wrapper %}
 
 {% block page %}MENU POSTED{% endblock page %}
 
 {% block paragraph %}
-    <p>新規メニュー<strong>{{ posted_menu.title }}</strong>を追加しました。</p>
-    <a class="button" href="{% url 'pages:menu' %}">メニュー一覧</a>
+    <p class="text-lg my-[10px] mx-0 mb-[42px]">新規メニュー<strong class="text-cafe-cyan">{{ posted_menu.title }}</strong>を追加しました。</p>
+    <a class="btn-primary inline-block" href="{% url 'pages:menu' %}">メニュー一覧</a>
 {% endblock paragraph %}
-

@@ -1,12 +1,12 @@
-# CafeApp
+# Cafe-App
 
 ## 概要
 
-CafeAppは、架空のカフェのウェブアプリケーションです。DjangoとMySQLを使用し、Dockerを利用して環境を構築しました。このプロジェクトは、学習目的で作成しました。
+Cafe-Appは、架空のカフェのウェブアプリケーションです。DjangoとMySQLを使用し、Dockerを利用して環境を構築しました。このプロジェクトは、学習目的で作成しました。
 
 ## 機能説明
 
-CafeAppでは、従業員側とユーザー側の機能が分けられています。
+Cafe-Appでは、従業員側とユーザー側の機能が分けられています。
 
 ### 従業員側の機能
 
@@ -31,6 +31,8 @@ CafeAppでは、従業員側とユーザー側の機能が分けられていま�
 - **Django**: 5.1+
 - **MySQL**: 8.0
 - **Docker Compose**: 最新版
+- **Tailwind CSS**: 3.4+
+- **Node.js**: 20 (Tailwindビルド用)
 - **その他のライブラリ**: requirements.txtを参照
 
 ## システム要件
@@ -43,8 +45,8 @@ CafeAppでは、従業員側とユーザー側の機能が分けられていま�
 1. リポジトリをクローン
 
 ```bash
-git clone https://github.com/shinma06/cafeapp
-cd cafeapp
+git clone https://github.com/shinma06/cafe-app
+cd cafe-app
 ```
 
 2. 環境変数の設定
@@ -91,13 +93,13 @@ docker ps
 
 ```
 CONTAINER ID   IMAGE         COMMAND                   CREATED      STATUS          PORTS                               NAMES
-xxxxxxxxxxxx   cafeapp-web   "./combined_script.sh"    x days ago   Up x minutes   0.0.0.0:8000->8000/tcp              cafeapp-web
-xxxxxxxxxxxx   mysql:8.0     "docker-entrypoint.s…"   x days ago   Up x minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   cafeapp-mysql
+xxxxxxxxxxxx   cafe-app-web   "./combined_script.sh"    x days ago   Up x minutes   0.0.0.0:8000->8000/tcp              cafe-app-web
+xxxxxxxxxxxx   mysql:8.0     "docker-entrypoint.s…"   x days ago   Up x minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   cafe-app-mysql
 ```
 
 2. Djangoのスーパーユーザーを作成
 
-CafeAppのコンテナ内でDjangoのスーパーユーザーを作成するために、以下のコマンドを実行します。ここで`xxx`は`docker ps`コマンドの出力で表示されたcafeapp-webコンテナのCONTAINER IDの頭文字2～3文字に置き換えてください。
+Cafe-Appのコンテナ内でDjangoのスーパーユーザーを作成するために、以下のコマンドを実行します。ここで`xxx`は`docker ps`コマンドの出力で表示されたcafe-app-webコンテナのCONTAINER IDの頭文字2～3文字に置き換えてください。
 
 ```bash
 docker exec -it xxx bash
@@ -169,24 +171,35 @@ docker compose exec web python manage.py migrate
 
 # テストの実行
 docker compose exec web python manage.py test
+
+# Tailwind CSSのビルド
+make tailwind-build
+
+# Tailwind CSSのwatchモード（開発時）
+make tailwind-watch
 ```
 
 ## プロジェクト構造
 
 ```
-cafeapp/
+cafe-app/
 ├── accounts/           # ユーザー認証アプリ
 ├── pages/              # メインアプリ（メニュー、ニュース、予約等）
-├── cafeapp/            # プロジェクト設定
+├── cafe-app/            # プロジェクト設定
 ├── templates/          # テンプレートファイル
 ├── static/             # 静的ファイル
+│   ├── src/            # Tailwind CSSソース
+│   └── dist/           # Tailwind CSSビルド出力
 ├── media/              # アップロードされたメディアファイル
 ├── docker/             # Docker関連設定
 │   └── mysql/
 │       └── conf.d/     # MySQL設定ファイル
-├── Dockerfile          # Dockerイメージ定義
-├── docker compose.yml  # Docker Compose設定
+├── Dockerfile          # Djangoイメージ定義
+├── Dockerfile.node     # Node.js/Tailwindイメージ定義
+├── docker-compose.yml  # Docker Compose設定
 ├── requirements.txt    # Pythonパッケージ
+├── package.json        # Node.jsパッケージ
+├── tailwind.config.js  # Tailwind CSS設定
 ├── env.sample          # 環境変数サンプル
 └── README.md           # このファイル
 ```

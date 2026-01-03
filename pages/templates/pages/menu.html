@@ -2,46 +2,54 @@
 
 {% load static %}
 
-{% block title %}WCB Cafe - MENU{% endblock title %}
+{% block title %}Cafe-App - MENU{% endblock title %}
 
 {% block id %}menu{% endblock id %}
 
-{% block wrapper %}menu-content{% endblock wrapper %}
+{% block wrapper %}menu-content text-center mt-[10%]{% endblock wrapper %}
 
 {% block page %}MENU{% endblock page %}
 
 {% block paragraph %}
-<p>体に優しい自然食を提供する、WCB CAFE。無添加の食材を利用したメニューが特徴です。おいしいブレンドコーヒーとヘルシーなオーガニックフードで体の内側から癒やされてください。</p>
+<p class="text-lg my-[10px] mx-0 mb-[42px]">体に優しい自然食を提供する、Cafe-App。無添加の食材を利用したメニューが特徴です。おいしいブレンドコーヒーとヘルシーなオーガニックフードで体の内側から癒やされてください。</p>
 {% endblock paragraph %}
 
 {% block content %}
-<div class="wrapper grid">
-    <div class="item big-box">
-        <a href="#">
-            <img src="{% static 'pages/images/coffee.jpg' %}" alt="こだわりのコーヒー">
-        </a>
-        <div class="menu">
-            <a href="#"><h2>こだわりコーヒー</h2></a>
-            <h3>￥680 (税込)</h3>
+<div class="max-w-[1100px] w-[90%] mx-auto my-0 py-[50px]">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- 特別メニュー（大きめ） -->
+        <div class="col-span-1 sm:col-span-2 lg:col-span-2 row-span-2">
+            <a href="#" class="block h-full">
+                <div class="relative h-full min-h-[300px] overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                    <img src="{% static 'pages/images/coffee.jpg' %}" alt="こだわりのコーヒー" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                        <h2 class="text-white text-2xl font-bold mb-2">こだわりコーヒー</h2>
+                        <h3 class="text-cafe-cyan text-xl font-semibold">￥680 (税込)</h3>
+                    </div>
+                </div>
+            </a>
         </div>
-    </div>
-    {% for item in object_list %}
-    <div class="item">
-        <a href="#">
-            <img src="{{ item.img.url }}" alt="{{ item.alt }}"/>
-        </a>
-        <div class="menu">
-            <a href="#"><h2>{{ item.title }}</h2></a>
-            <h3>￥{{ item.price }} (税込)</h3>
+        <!-- 通常メニュー -->
+        {% for item in object_list %}
+        <div>
+            <a href="#" class="block h-full">
+                <div class="relative h-full min-h-[250px] overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                    <img src="{{ item.img.url }}" alt="{{ item.alt }}" class="w-full h-full object-cover"/>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <h2 class="text-white text-lg font-bold mb-1">{{ item.title }}</h2>
+                        <h3 class="text-cafe-cyan text-base font-semibold">￥{{ item.price }} (税込)</h3>
+                    </div>
+                </div>
+            </a>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endblock content %}
 
 {% block footer %}
-<footer>
-    <div class="wrapper">
+<footer class="bg-cafe-brown text-white text-center py-4">
+    <div class="max-w-[1100px] w-[90%] mx-auto my-0">
         <p><small>&copy; 2019 Manabox</small></p>
     </div>
 </footer>

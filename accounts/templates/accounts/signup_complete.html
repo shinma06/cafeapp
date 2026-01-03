@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}WCB Cafe - SIGNUP{% endblock title %}
+{% block title %}Cafe-App - SIGNUP{% endblock title %}
 
 {% block id %}accounts{% endblock id %}
 
-{% block wrapper %}home-content{% endblock wrapper %}
+{% block wrapper %}home-content text-center mt-[10%]{% endblock wrapper %}
 
 {% block page %}SIGNUP COMPLETE{% endblock page %}
 
 {% block paragraph %}
-    <p>新規登録が完了しました。ようこそ{{ user.username }}さん</p>
-    <a class="button" href="{% url 'pages:index' %}">ホームへ戻る</a>
+    <p class="text-lg my-[10px] mx-0 mb-[42px]">新規登録が完了しました。ようこそ<strong class="text-cafe-cyan">{{ user.username }}</strong>さん</p>
+    <a class="btn-primary inline-block" href="{% url 'pages:index' %}">ホームへ戻る</a>
 {% endblock paragraph %}

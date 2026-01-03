@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* カスタムコンポーネント */
+@layer components {
+
+  /* ボタン */
+  .btn-primary {
+    @apply text-[1.375rem] bg-cafe-cyan text-white rounded-md py-[18px] px-8 mb-[30px] hover:bg-cafe-cyan-dark transition-colors;
+  }
+
+  /* ページタイトル */
+  .page-title-custom {
+    @apply text-[5rem] font-philosopher uppercase font-normal;
+  }
+
+  /* サブタイトル */
+  .sub-title-custom {
+    @apply text-[1.375rem] px-2 pb-2 border-b-2 border-cafe-cyan font-normal;
+  }
+
+  /* ナビゲーションドロップダウン矢印 */
+  .nav-arrow::after {
+    content: '';
+    @apply inline-block w-[6px] h-[6px] ml-[15px] border-r border-b border-cafe-cyan rotate-45;
+  }
+
+  /* ポストデート（円形） */
+  .post-date-circle {
+    @apply bg-cafe-cyan rounded-full text-white w-[100px] h-[100px] text-[1.625rem] text-center absolute top-0 pt-[10px];
+  }
+
+  .post-date-circle span {
+    @apply text-base border-t border-white/50 pt-[6px] block w-3/5 mx-auto;
+  }
+
+  /* ページネーション */
+  .pagination-item {
+    @apply w-[45px] h-[45px] rounded-full flex justify-center items-center bg-white border-2 border-cafe-cyan text-sm text-cafe-cyan font-bold transition-all;
+  }
+
+  .pagination-item:hover:not(.pagination-active) {
+    @apply bg-cafe-cyan text-white;
+  }
+
+  .pagination-active {
+    @apply bg-cafe-cyan text-white pointer-events-none;
+  }
+
+  /* フォーム要素 */
+  .form-input {
+    @apply bg-white/50 border border-white rounded-md p-[10px] text-base;
+  }
+
+  .form-input-text {
+    @apply form-input w-full max-w-[360px];
+  }
+
+  .form-textarea {
+    @apply form-input w-full max-w-[480px] h-24 resize-none;
+  }
+
+  .form-select {
+    @apply form-input;
+  }
+}
+
+/* カスタムユーティリティ */
+@layer utilities {
+
+  /* 背景画像のスタイル */
+  .big-bg {
+    @apply bg-cover bg-center bg-top;
+  }
+
+  /* ページ別の背景画像 */
+  #home {
+    background-image: url('/static/pages/images/main-bg.jpg');
+    @apply min-h-screen;
+  }
+
+  #complete {
+    background-image: url('/static/pages/images/complete-bg.jpg');
+    @apply min-h-screen;
+  }
+
+  #news {
+    background-image: url('/static/pages/images/news-bg.jpg');
+    @apply h-[270px] mb-10;
+  }
+
+  #menu {
+    background-image: url('/static/pages/images/menu-bg.jpg');
+    @apply min-h-screen;
+  }
+
+  #contact,
+  #accounts {
+    background-image: url('/static/pages/images/contact-bg.jpg');
+    @apply min-h-screen;
+  }
+
+  #menu-detail {
+    background-image: url('/static/pages/images/white.jpg');
+    @apply min-h-[80vh];
+  }
+}
+
+/* レスポンシブデザイン用のブレークポイント調整 */
+@media (max-width: 600px) {
+  .page-title-custom {
+    @apply text-[2.5rem];
+  }
+
+  .post-date-circle {
+    @apply w-[70px] h-[70px] text-base;
+  }
+
+  .post-date-circle span {
+    @apply text-[0.875rem] pt-[2px];
+  }
+}

@@ -1,26 +1,55 @@
 {% extends 'base.html' %}
 
-{% block title %}WCB Cafe - ACCOUNT{% endblock title %}
+{% block title %}Cafe-App - ACCOUNT{% endblock title %}
 
 {% block id %}accounts{% endblock id %}
 
 {% block page %}ACCOUNT EDIT{% endblock page %}
 
 {% block paragraph %}
-<form method="post" enctype="multipart/form-data">
-    <div class="form-group">
+<form method="post" enctype="multipart/form-data" class="max-w-2xl mx-auto mb-8">
+    <div class="space-y-4">
         {% csrf_token %}
         {{ form.as_p }}
     </div>
-    <input type="submit" class="button" value="ユーザー名変更">
+    <input type="submit" class="btn-primary mt-6" value="ユーザー名変更">
 </form>
-<label class="open button" for="pop-up">LOGOUT</label>
-<input type="checkbox" id="pop-up">
-<div class="overlay">
-    <div class="window">
-        <h4>ログアウトしてよろしいですか？</h4>
-        <a class="button" href="{% url 'accounts:logout' %}">LOGOUT</a>
-        <label class="close" for="pop-up">閉じる</label>
+
+<div class="max-w-2xl mx-auto mt-8">
+    <label class="btn-primary inline-block bg-red-600 hover:bg-red-700 cursor-pointer" for="pop-up">LOGOUT</label>
+</div>
+
+<input type="checkbox" id="pop-up" class="hidden">
+<div class="overlay fixed inset-0 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center z-50 peer-checked:opacity-100 peer-checked:pointer-events-auto" style="transition: opacity 0.3s;">
+    <div class="window bg-white p-8 rounded-lg shadow-2xl max-w-md w-[90%] transform scale-95 transition-transform duration-300" style="transition: transform 0.3s;">
+        <h4 class="text-2xl font-bold mb-6 text-center text-cafe-brown">ログアウトしてよろしいですか？</h4>
+        <div class="flex flex-col gap-4">
+            <a class="btn-primary inline-block bg-red-600 hover:bg-red-700 text-center" href="{% url 'accounts:logout' %}">LOGOUT</a>
+            <label class="btn-primary inline-block bg-gray-500 hover:bg-gray-600 text-center cursor-pointer" for="pop-up">閉じる</label>
+        </div>
     </div>
 </div>
+
+<style>
+    form p {
+        @apply mb-4;
+    }
+    form label {
+        @apply block font-bold mb-2 text-cafe-brown;
+    }
+    form input[type="text"],
+    form input[type="password"],
+    form input[type="email"] {
+        @apply w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cafe-cyan;
+    }
+    
+    #pop-up:checked ~ .overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    
+    #pop-up:checked ~ .overlay .window {
+        transform: scale(1);
+    }
+</style>
 {% endblock paragraph %}

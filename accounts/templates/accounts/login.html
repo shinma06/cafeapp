@@ -1,18 +1,34 @@
 {% extends 'base.html' %}
 
-{% block title %}WCB Cafe - LOGIN{% endblock title %}
+{% block title %}Cafe-App - LOGIN{% endblock title %}
 
 {% block id %}accounts{% endblock id %}
 
 {% block page %}Login{% endblock page %}
 
 {% block paragraph %}
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
+    <form method="post" enctype="multipart/form-data" class="max-w-2xl mx-auto">
+        <div class="space-y-4">
             {% csrf_token %}
             {{ form.as_p }}
         </div>
-        <p>アカウントの新規登録は<a href="{% url 'accounts:signup' %}">こちら</a></p>
-        <button type="submit" class="button">ログインする</button>
+        <p class="text-center text-sm text-gray-600 mt-4">
+            アカウントの新規登録は<a href="{% url 'accounts:signup' %}" class="text-cafe-cyan hover:text-cafe-cyan-dark underline">こちら</a>
+        </p>
+        <button type="submit" class="btn-primary mt-6">ログインする</button>
     </form>
+
+    <style>
+        form p {
+            @apply mb-4;
+        }
+        form label {
+            @apply block font-bold mb-2 text-cafe-brown;
+        }
+        form input[type="text"],
+        form input[type="password"],
+        form input[type="email"] {
+            @apply w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cafe-cyan;
+        }
+    </style>
 {% endblock paragraph %}

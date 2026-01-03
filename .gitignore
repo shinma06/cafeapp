@@ -4,6 +4,9 @@ __pycache__/
 *$py.class
 *.so
 .Python
+env/
+venv/
+ENV/
 build/
 develop-eggs/
 dist/
@@ -19,22 +22,19 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
 
 # Django
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+/staticfiles/
 /media/
-/static/
-*.pot
 
-# 環境変数
+# Environment
 .env
 .env.local
 .env.*.local
-env.sample.backup
 
 # IDE
 .vscode/
@@ -42,69 +42,31 @@ env.sample.backup
 *.swp
 *.swo
 *~
-.project
-.pydevproject
-.settings/
-
-# OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-Desktop.ini
 
 # Docker
-data/
 docker-compose.override.yml
 
-# テスト
-.pytest_cache/
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Tailwind build output (ただし、開発時は必要なので除外しない)
+# static/dist/
+
+# Coverage
+htmlcov/
 .coverage
 .coverage.*
-htmlcov/
-.tox/
-.nox/
 coverage.xml
 *.cover
-.hypothesis/
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# Testing
+.pytest_cache/
+.tox/
 
-# pyenv
-.python-version
-
-# Celery
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath
-*.sage.py
-
-# Environments
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre
-.pyre/
-
-# Backup files
+# Backup
 *.bak
 *.backup
-*~
-
-# Temporary files
-*.tmp
-*.temp

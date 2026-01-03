@@ -1,117 +1,120 @@
 {% extends 'base.html' %}
 
-{% block title %}WCB Cafe - NEWS{% endblock title %}
+{% block title %}Cafe-App - MENU DETAIL{% endblock title %}
 
-{% block id %}menu-ditail{% endblock id %}
+{% block id %}menu-detail{% endblock id %}
 
 {% block page %}MENU DETAIL{% endblock page %}
 
 {% block content %}
-<div class="news-contents wrapper">
-    <!-- メニュー説明 -->
-    <div class="menu-detail">
-        <!-- Menu Image -->
-        <div class="menu-image">
-            <img src="whit.jpg" alt="Menu Image">
-        </div>
-        
-        <!-- Menu Name & Rating -->
-        <div class="menu-info">
-            <h2>水出しコーヒー</h2>
-            <div class="rating">
-                <span class="rating-value">4.5</span>
+<div class="max-w-[1100px] w-[90%] mx-auto my-0 py-[50px]">
+    <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-[50px]">
+        <!-- メニュー詳細 -->
+        <div class="space-y-8">
+            <!-- Menu Image -->
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <img src="whit.jpg" alt="Menu Image" class="w-full h-auto">
+            </div>
+            
+            <!-- Menu Name & Rating -->
+            <div class="flex items-center justify-between">
+                <h2 class="text-3xl font-bold text-cafe-brown">水出しコーヒー</h2>
+                <div class="flex items-center bg-cafe-cyan text-white px-4 py-2 rounded-full">
+                    <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                    <span class="text-lg font-bold">4.5</span>
+                </div>
+            </div>
+            
+            <!-- Menu Description -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4 text-cafe-brown border-b-2 border-cafe-brown pb-2">メニューの説明</h2>
+                <p class="text-base leading-relaxed">This is a description of the menu item. It provides information about the dish and its ingredients.</p>
+            </div>
+            
+            <!-- Allergy List -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4 text-cafe-brown border-b-2 border-cafe-brown pb-2">アレルギーリスト</h2>
+                <ul class="list-disc list-inside space-y-2">
+                    <li>Allergy Item 1</li>
+                    <li>Allergy Item 2</li>
+                    <li>Allergy Item 3</li>
+                </ul>
+            </div>
+            
+            <!-- Price -->
+            <div class="bg-cafe-cyan text-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold mb-2">価格</h2>
+                <span class="text-3xl font-bold">¥1000 (税込)</span>
+            </div>
+
+            <!-- レビュー一覧 -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold mb-6 text-cafe-brown">お客様のレビュー</h2>
+                <p class="text-center text-gray-500 py-10">ニュースはありません。</p>
             </div>
         </div>
-        
-        <!-- Menu Description -->
-        <div class="menu-description">
-            <h2>メニューの説明</h2>
-            <p>This is a description of the menu item. It provides information about the dish and its ingredients.</p>
-        </div>
-        
-        <!-- Allergy List -->
-        <div class="allergy-list">
-            <h2>アレルギーリスト</h2>
-            <ul>
-                <li>Allergy Item 1</li>
-                <li>Allergy Item 2</li>
-                <li>Allergy Item 3</li>
+
+        <!-- サイドバー -->
+        <aside>
+            <h3 class="text-lg font-bold mb-4 pb-2 border-b-2 border-cafe-brown">カテゴリー</h3>
+            <ul class="space-y-2 mb-8">
+                <li><a href="#" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">全てのレビュー(絞り込まれていたら表示) <strong class="text-cafe-cyan-dark">&lt;</strong></a></li>
+                <li><a href="#" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">昇順 or 降順 <strong class="text-cafe-cyan-dark">&lt;</strong></a></li>
+                <li><a href="#" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">星5のレビュー <strong class="text-cafe-cyan-dark">&lt;</strong></a></li>
+                <li><a href="#" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">星4のレビュー <strong class="text-cafe-cyan-dark">&lt;</strong></a></li>
+                <li><a href="#" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">星3のレビュー <strong class="text-cafe-cyan-dark">&lt;</strong></a></li>
+                <li><a href="#" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">星2のレビュー <strong class="text-cafe-cyan-dark">&lt;</strong></a></li>
+                <li><a href="#" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">星1のレビュー <strong class="text-cafe-cyan-dark">&lt;</strong></a></li>
             </ul>
-        </div>
-        
-        <!-- Price -->
-        
-        <div class="price">
-            <h2>価格</h2>
-            <span>¥1000 (税込)</span>
-        </div>
+
+            <h3 class="text-lg font-bold mb-4 pb-2 border-b-2 border-cafe-brown">このお店について</h3>
+            <p class="text-sm leading-relaxed">
+                体に優しい自然食を提供する、Cafe-App。無添加の食材を利用したメニューが特徴です。
+                おいしいブレンドコーヒーとヘルシーなオーガニックフードで体の内側から癒やされてください。
+            </p>
+        </aside>
     </div>
-    <!-- レビュー一覧 -->
-    <article>
-        <h2>お客様のレビュー</h2>
-        <p>ニュースはありません。</p>
-    </article>
-
-    <!-- サイドバー -->
-    <aside>
-        <h3 class="sub-title">カテゴリー</h3>
-        <ul class="sub-menu">
-            <li><a href="#">全てのレビュー(絞り込まれていたら表示) <strong style="color: #0bd;">&lt;</strong></a></li>
-            <li><a href="#">昇順 or 降順 <strong style="color: #0bd;">&lt;</strong></a></li>
-            <li><a href="#">星5のレビュー <strong style="color: #0bd;">&lt;</strong></a></li>
-            <li><a href="#">星4のレビュー <strong style="color: #0bd;">&lt;</strong></a></li>
-            <li><a href="#">星3のレビュー <strong style="color: #0bd;">&lt;</strong></a></li>
-            <li><a href="#">星2のレビュー <strong style="color: #0bd;">&lt;</strong></a></li>
-            <li><a href="#">星1のレビュー <strong style="color: #0bd;">&lt;</strong></a></li>
-        </ul>
-
-        <h3 class="sub-title">このお店について</h3>
-        <p>
-            体に優しい自然食を提供する、WCB CAFE。無添加の食材を利用したメニューが特徴です。
-            おいしいブレンドコーヒーとヘルシーなオーガニックフードで体の内側から癒やされてください。
-        </p>
-    </aside>
 
     <!-- ページネーション -->
-    <div class="Paginations">
-        {% if show_pagination %}   
-        <ul class="Pagination">
+    {% if show_pagination %}
+    <div class="mt-12">
+        <ul class="flex items-center justify-center gap-2">
             {% if page_obj.number != 1 %}
-                <li class="Pagination-Item">
-                    <a class="Pagination-Item-Link" href="?page=1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="Pagination-Item-Link-Icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <li>
+                    <a href="?page=1" class="flex items-center justify-center w-10 h-10 border border-cafe-cyan text-cafe-cyan hover:bg-cafe-cyan hover:text-white transition-colors rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
                         </svg>
                     </a>
                 </li>
             {% endif %}
-            <ul class="Pagination">
-                {% for page_num in pages %}
-                    <li class="Pagination-Item">
-                        <a class="Pagination-Item-Link {% if page_num == page_obj.number %}isActive{% endif %}" href="?page={{ page_num }}">
-                            <span>{{ page_num }}</span>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+            {% for page_num in pages %}
+                <li>
+                    <a href="?page={{ page_num }}" class="flex items-center justify-center w-10 h-10 border border-cafe-cyan text-cafe-cyan hover:bg-cafe-cyan hover:text-white transition-colors rounded {% if page_num == page_obj.number %}bg-cafe-cyan text-white{% endif %}">
+                        <span>{{ page_num }}</span>
+                    </a>
+                </li>
+            {% endfor %}
             {% if page_obj.number != page_obj.paginator.num_pages %}
-                <li class="Pagination-Item">
-                    <a class="Pagination-Item-Link" href="?page={{ page_obj.paginator.num_pages }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="Pagination-Item-Link-Icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <li>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="flex items-center justify-center w-10 h-10 border border-cafe-cyan text-cafe-cyan hover:bg-cafe-cyan hover:text-white transition-colors rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
                         </svg>
                     </a>
                 </li>
             {% endif %}
         </ul>
-    {% endif %}
     </div>
+    {% endif %}
 </div>
 {% endblock content %}
 
 {% block footer %}
-<footer>
-    <div class="wrapper">
+<footer class="bg-cafe-brown text-white text-center py-4">
+    <div class="max-w-[1100px] w-[90%] mx-auto my-0">
         <p><small>&copy; 2019 Manabox</small></p>
     </div>
 </footer>

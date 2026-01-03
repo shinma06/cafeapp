@@ -70,19 +70,12 @@ WSGI_APPLICATION = 'cafeapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASE_URLがある場合はそれを使用、なければデフォルト設定
+import dj_database_url
+
+DATABASE_URL = os.environ.get('DATABASE_URL', 'postgres://shinma:0103@postgres:5432/cafeapp')
 DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('DATABASE_ENGINE', 'django.db.backends.mysql'),
-        'NAME': os.environ.get('DATABASE_NAME', 'cafeapp'),
-        'USER': os.environ.get('DATABASE_USER', 'shinma'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', '0103'),
-        'HOST': os.environ.get('DATABASE_HOST', 'mysql'),
-        'PORT': os.environ.get('DATABASE_PORT', '3306'),
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-    }
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 }
 
 # Password validation
@@ -118,7 +111,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # collectstatic用
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # 開発環境用
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

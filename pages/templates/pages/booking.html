@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
 {% endblock %}
 
-{% block title %}WCB Cafe - BOOKING{% endblock title %}
+{% block title %}Cafe-App - BOOKING{% endblock title %}
 
 {% block id %}accounts{% endblock id %}
 
@@ -15,19 +15,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 
-    <p style="padding-bottom: 25px;">
+    <p class="text-base leading-relaxed mb-8 text-center">
         営業時間は9:30～22:00までです<br>
         最大来客人数は10人までとさせていただきます。<br>
         予約内容は予約確定後メールに送信されます。
     </p>
 
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
+    <form method="post" enctype="multipart/form-data" class="max-w-2xl mx-auto">
+        <div class="space-y-4">
             {% csrf_token %}
             {{ form.as_p }}
         </div>
-        <input type="submit" class="button" value="予約内容確認に進む">
+        <input type="submit" class="btn-primary mt-6" value="予約内容確認に進む">
     </form>
+
+    <style>
+        form p {
+            @apply mb-4;
+        }
+        form label {
+            @apply block font-bold mb-2 text-cafe-brown;
+        }
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="number"],
+        form input[type="tel"],
+        form input[type="time"],
+        form select,
+        form textarea {
+            @apply w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cafe-cyan;
+        }
+    </style>
 
     <script>
         $(function() {

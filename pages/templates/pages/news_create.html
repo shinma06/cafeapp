@@ -1,17 +1,36 @@
 {% extends 'base.html' %}
 
-{% block title %}WCB Cafe - CREATE NEWS{% endblock title %}
+{% block title %}Cafe-App - CREATE NEWS{% endblock title %}
 
 {% block id %}accounts{% endblock id %}
 
 {% block page %}CREATE NEWS{% endblock page %}
 
 {% block paragraph %}
-<form method="post" enctype="multipart/form-data">
-    <div class="form-group">
+<form method="post" enctype="multipart/form-data" class="max-w-2xl mx-auto">
+    <div class="space-y-4">
         {% csrf_token %}
         {{ form.as_p }}
     </div>
-    <input type="submit" class="button" value="投稿">
+    <input type="submit" class="btn-primary mt-6" value="投稿">
 </form>
+
+<style>
+    form p {
+        @apply mb-4;
+    }
+    form label {
+        @apply block font-bold mb-2 text-cafe-brown;
+    }
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="file"],
+    form select,
+    form textarea {
+        @apply w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cafe-cyan;
+    }
+    form textarea {
+        @apply min-h-[150px];
+    }
+</style>
 {% endblock paragraph %}

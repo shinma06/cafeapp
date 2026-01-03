@@ -1,0 +1,24 @@
+# Node.js用のDockerfile（Tailwind CSSビルド用）
+FROM node:20-alpine
+
+WORKDIR /app
+
+# package.jsonとtailwind.config.jsをコピー
+COPY package.json tailwind.config.js ./
+
+# 依存関係のインストール
+RUN npm install
+
+# ソースファイルとテンプレートをコピー
+COPY ./static ./static
+COPY ./templates ./templates
+COPY ./pages ./pages
+COPY ./accounts ./accounts
+COPY ./cafeapp ./cafeapp
+
+# Tailwind CSSの初回ビルド
+RUN npm run build:css
+
+# watchモードで起動する場合
+CMD ["npm", "run", "watch:css"]
+

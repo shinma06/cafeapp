@@ -1,86 +1,118 @@
 {% extends 'base.html' %}
 
-{% block title %}WCB Cafe - BOOKING LIST{% endblock title %}
+{% block title %}Cafe-App - BOOKING LIST{% endblock title %}
 
 {% block id %}news{% endblock id %}
 
 {% block page %}BOOKING LIST{% endblock page %}
 
 {% block content %}
-<div class="news-contents wrapper">
-    <!-- 予約一覧 -->
-    <article>
-        {% if booking_list %}
-            {% for booking in booking_list %}
-                <header class="post-info">
-                    <h2 class="post-title">{{ booking.name }} 様</h2>
-                    <p class="post-date">{{ booking.date|date:"m" }}/{{ booking.date|date:"d" }}<span>{{ booking.date|date:"Y" }}</span></p>
-                    <strong class="post-cat">来店時間: {{ booking.time }}</strong>
-                </header>
-                <p>来客人数：{{ booking.number_of_people }} 人</p>
-                <p>お電話番号:<br>{{ booking.phone_number }}</p>
-                <p>Eメールアドレス:<br>{{ booking.email }}</p>
-            {% endfor %}
-        {% else %}
-            <p>予約はありません。</p>
-        {% endif %}
-    </article>
-
-    <!-- サイドバー -->
-    <aside>
-        <h3 class="sub-title">カテゴリー</h3>
-        <ul class="sub-menu">
-            {% if selected_period %}
-                <li><a href="{% url 'pages:booking-list' %}">すべての予約</a></li>
+<div class="max-w-[1100px] w-[90%] mx-auto my-0 py-[50px]">
+    <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-[50px]">
+        <!-- 予約一覧 -->
+        <article>
+            {% if booking_list %}
+                {% for booking in booking_list %}
+                    <div class="mb-10 pb-10 border-b border-gray-300 bg-white p-6 rounded-lg shadow">
+                        <header class="mb-4">
+                            <h2 class="text-xl font-bold mb-2 text-cafe-brown">{{ booking.name }} 様</h2>
+                            <p class="text-sm text-gray-600 mb-1">
+                                {{ booking.date|date:"m" }}/{{ booking.date|date:"d" }}
+                                <span class="ml-2">{{ booking.date|date:"Y" }}</span>
+                            </p>
+                            <strong class="text-sm text-cafe-cyan font-semibold">来店時間: {{ booking.time }}</strong>
+                        </header>
+                        <div class="space-y-2 text-base">
+                            <p>来客人数：<span class="font-bold">{{ booking.number_of_people }} 人</span></p>
+                            <p>お電話番号：<span class="font-mono">{{ booking.phone_number }}</span></p>
+                            <p>Eメールアドレス：<span class="font-mono text-sm">{{ booking.email }}</span></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center text-gray-500 py-10">予約はありません。</p>
             {% endif %}
-            <li><a href="{% url 'pages:booking-date' date='today' %}">本日の予約 {% if selected_period == 'today' %}<strong style="color: #0bd;">&lt;</strong>{% endif %}</a></li>
-            <li><a href="{% url 'pages:booking-date' date='tomorrow' %}">明日の予約 {% if selected_period == 'tomorrow' %}<strong style="color: #0bd;">&lt;</strong>{% endif %}</a></li>
-            <li><a href="{% url 'pages:booking-date' date='this_week' %}">今週の予約 {% if selected_period == 'this_week' %}<strong style="color: #0bd;">&lt;</strong>{% endif %}</a></li>
-            <li><a href="{% url 'pages:booking-date' date='this_month' %}">今月の予約 {% if selected_period == 'this_month' %}<strong style="color: #0bd;">&lt;</strong>{% endif %}</a></li>
-            <li><a href="{% url 'pages:booking-date' date='next_month' %}">翌月の予約 {% if selected_period == 'next_month' %}<strong style="color: #0bd;">&lt;</strong>{% endif %}</a></li>
-            <li><a href="{% url 'pages:booking-date' date='past_booking' %}">過去の予約 {% if selected_period == 'past_booking' %}<strong style="color: #0bd;">&lt;</strong>{% endif %}</a></li>
-        </ul>
-    </aside>
+        </article>
+
+        <!-- サイドバー -->
+        <aside>
+            <h3 class="text-lg font-bold mb-4 pb-2 border-b-2 border-cafe-brown">カテゴリー</h3>
+            <ul class="space-y-2 mb-8">
+                {% if selected_period %}
+                    <li><a href="{% url 'pages:booking-list' %}" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">すべての予約</a></li>
+                {% endif %}
+                <li>
+                    <a href="{% url 'pages:booking-date' date='today' %}" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">
+                        本日の予約 {% if selected_period == 'today' %}<strong class="text-cafe-cyan-dark">&lt;</strong>{% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'pages:booking-date' date='tomorrow' %}" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">
+                        明日の予約 {% if selected_period == 'tomorrow' %}<strong class="text-cafe-cyan-dark">&lt;</strong>{% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'pages:booking-date' date='this_week' %}" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">
+                        今週の予約 {% if selected_period == 'this_week' %}<strong class="text-cafe-cyan-dark">&lt;</strong>{% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'pages:booking-date' date='this_month' %}" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">
+                        今月の予約 {% if selected_period == 'this_month' %}<strong class="text-cafe-cyan-dark">&lt;</strong>{% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'pages:booking-date' date='next_month' %}" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">
+                        翌月の予約 {% if selected_period == 'next_month' %}<strong class="text-cafe-cyan-dark">&lt;</strong>{% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'pages:booking-date' date='past_booking' %}" class="text-cafe-cyan hover:text-cafe-cyan-dark transition-colors">
+                        過去の予約 {% if selected_period == 'past_booking' %}<strong class="text-cafe-cyan-dark">&lt;</strong>{% endif %}
+                    </a>
+                </li>
+            </ul>
+        </aside>
+    </div>
 
     <!-- ページネーション -->
-    <div class="Paginations">
-        {% if show_pagination %}   
-        <ul class="Pagination">
+    {% if show_pagination %}
+    <div class="mt-12">
+        <ul class="flex items-center justify-center gap-2">
             {% if page_obj.number != 1 %}
-                <li class="Pagination-Item">
-                    <a class="Pagination-Item-Link" href="?page=1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="Pagination-Item-Link-Icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <li>
+                    <a href="?page=1" class="flex items-center justify-center w-10 h-10 border border-cafe-cyan text-cafe-cyan hover:bg-cafe-cyan hover:text-white transition-colors rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
                         </svg>
                     </a>
                 </li>
             {% endif %}
-            <ul class="Pagination">
-                {% for page_num in pages %}
-                    <li class="Pagination-Item">
-                        <a class="Pagination-Item-Link {% if page_num == page_obj.number %}isActive{% endif %}" href="?page={{ page_num }}">
-                            <span>{{ page_num }}</span>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+            {% for page_num in pages %}
+                <li>
+                    <a href="?page={{ page_num }}" class="flex items-center justify-center w-10 h-10 border border-cafe-cyan text-cafe-cyan hover:bg-cafe-cyan hover:text-white transition-colors rounded {% if page_num == page_obj.number %}bg-cafe-cyan text-white{% endif %}">
+                        <span>{{ page_num }}</span>
+                    </a>
+                </li>
+            {% endfor %}
             {% if page_obj.number != page_obj.paginator.num_pages %}
-                <li class="Pagination-Item">
-                    <a class="Pagination-Item-Link" href="?page={{ page_obj.paginator.num_pages }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="Pagination-Item-Link-Icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <li>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="flex items-center justify-center w-10 h-10 border border-cafe-cyan text-cafe-cyan hover:bg-cafe-cyan hover:text-white transition-colors rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
                         </svg>
                     </a>
                 </li>
             {% endif %}
         </ul>
-    {% endif %}
     </div>
+    {% endif %}
 </div>
 {% endblock content %}
+
 {% block footer %}
-<footer>
-    <div class="wrapper">
+<footer class="bg-cafe-brown text-white text-center py-4">
+    <div class="max-w-[1100px] w-[90%] mx-auto my-0">
         <p><small>&copy; 2019 Manabox</small></p>
     </div>
 </footer>

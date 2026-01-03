@@ -8,102 +8,104 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <!-- SEO -->
-  <title>{% block title %}WEBカフェ{% endblock title %}</title>
+  <title>{% block title %}Cafe-App{% endblock title %}</title>
   <meta name="description" content="ブレンドコーヒーとヘルシーなオーガニックフードを提供するカフェ">
   <meta name="keywords" content="カフェ,コーヒー,オーガニック,予約">
 
   <!-- Favicon -->
   <link rel="icon" href="{% static 'pages/images/favicon.png' %}">
 
-  <!-- CSS Reset -->
-  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'dist/output.css' %}">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Philosopher&display=swap">
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" type="text/css" href="{% static 'pages/css/style.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap">
 
   {% block extra_head %}{% endblock %}
 </head>
 
-<body>
+<body class="font-yugothic leading-[1.7] text-cafe-brown">
   <div id="{% block id %}{% endblock id %}" class="big-bg">
-    <header class="page-header wrapper">
-      <h1 class="logo-wrapper">
-        <a href="{% url 'pages:index' %}" aria-label="WEBカフェ ホーム">
-          <img class="logo" src="{% static 'pages/images/logo.svg' %}" alt="WEBカフェ ロゴ">
+    <header class="max-w-container mx-auto px-[4%] flex justify-between items-start">
+      <h1 class="mt-0">
+        <a href="{% url 'pages:index' %}" aria-label="Cafe-App ホーム">
+          <img class="w-[210px] mt-[14px]" src="{% static 'pages/images/logo.svg' %}" alt="Cafe-App ロゴ">
         </a>
       </h1>
 
       <nav aria-label="メインナビゲーション">
-        <ul class="main-nav">
+        <ul class="flex text-xl uppercase mt-[34px] list-none">
           <!-- メニュー -->
-          <li class="nav-single">
+          <li class="ml-9 relative group">
             {% if user.is_superuser %}
-            <a href="{% url 'pages:menu' %}" class="init-bottom">Menu</a>
-            <ul class="nav-second">
-              <li><a href="{% url 'pages:menu-create' %}">Create</a></li>
-              <li><a href="/admin/pages/menu/" target="_blank" rel="noopener noreferrer">Edit</a></li>
+            <a href="{% url 'pages:menu' %}"
+              class="text-cafe-brown hover:text-cafe-cyan transition-all nav-arrow">Menu</a>
+            <ul
+              class="absolute right-[7px] top-10 w-full invisible opacity-0 group-hover:visible group-hover:opacity-100 group-hover:top-[50px] transition-all z-10">
+              <li class="list-none"><a href="{% url 'pages:menu-create' %}"
+                  class="text-cafe-brown hover:text-cafe-cyan block py-2">Create</a></li>
+              <li class="list-none"><a href="/admin/pages/menu/" target="_blank" rel="noopener noreferrer"
+                  class="text-cafe-brown hover:text-cafe-cyan block py-2">Edit</a></li>
             </ul>
             {% else %}
-            <a href="{% url 'pages:menu' %}">Menu</a>
+            <a href="{% url 'pages:menu' %}" class="text-cafe-brown hover:text-cafe-cyan transition-all">Menu</a>
             {% endif %}
           </li>
 
           <!-- ニュース -->
-          <li class="nav-single">
+          <li class="ml-9 relative group">
             {% if user.is_superuser %}
-            <a href="{% url 'pages:news' %}" class="init-bottom">News</a>
-            <ul class="nav-second">
-              <li><a href="{% url 'pages:news-create' %}">Create</a></li>
-              <li><a href="/admin/pages/news/" target="_blank" rel="noopener noreferrer">Edit</a></li>
+            <a href="{% url 'pages:news' %}"
+              class="text-cafe-brown hover:text-cafe-cyan transition-all nav-arrow">News</a>
+            <ul
+              class="absolute right-[7px] top-10 w-full invisible opacity-0 group-hover:visible group-hover:opacity-100 group-hover:top-[50px] transition-all z-10">
+              <li class="list-none"><a href="{% url 'pages:news-create' %}"
+                  class="text-cafe-brown hover:text-cafe-cyan block py-2">Create</a></li>
+              <li class="list-none"><a href="/admin/pages/news/" target="_blank" rel="noopener noreferrer"
+                  class="text-cafe-brown hover:text-cafe-cyan block py-2">Edit</a></li>
             </ul>
             {% else %}
-            <a href="{% url 'pages:news' %}">News</a>
+            <a href="{% url 'pages:news' %}" class="text-cafe-brown hover:text-cafe-cyan transition-all">News</a>
             {% endif %}
           </li>
 
           <!-- 予約 -->
-          <li>
+          <li class="ml-9">
             {% if user.is_superuser %}
-            <a href="{% url 'pages:booking-list' %}">Booking</a>
+            <a href="{% url 'pages:booking-list' %}"
+              class="text-cafe-brown hover:text-cafe-cyan transition-all">Booking</a>
             {% else %}
-            <a href="{% url 'pages:booking' %}">Booking</a>
+            <a href="{% url 'pages:booking' %}" class="text-cafe-brown hover:text-cafe-cyan transition-all">Booking</a>
             {% endif %}
           </li>
 
           <!-- お問い合わせ -->
-          <li><a href="{% url 'pages:contact' %}">Contact</a></li>
+          <li class="ml-9"><a href="{% url 'pages:contact' %}"
+              class="text-cafe-brown hover:text-cafe-cyan transition-all">Contact</a></li>
 
           <!-- アカウント -->
-          <li>
+          <li class="ml-9">
             {% if request.user.is_authenticated %}
-            <a href="{% url 'accounts:account' %}">Accounts</a>
+            <a href="{% url 'accounts:account' %}"
+              class="text-cafe-brown hover:text-cafe-cyan transition-all">Accounts</a>
             {% else %}
-            <a href="{% url 'accounts:login' %}">Login</a>
+            <a href="{% url 'accounts:login' %}" class="text-cafe-brown hover:text-cafe-cyan transition-all">Login</a>
             {% endif %}
           </li>
         </ul>
       </nav>
     </header>
 
-    <div class="wrapper {% block wrapper %}{% endblock wrapper %}">
-      <h2 class="page-title">{% block page %}{% endblock page %}</h2>
+    <div class="max-w-container mx-auto px-[4%] {% block wrapper %}{% endblock wrapper %}">
+      <h2 class="page-title-custom">{% block page %}{% endblock page %}</h2>
       {% block paragraph %}{% endblock paragraph %}
     </div>
   </div>
 
-  <main>
-    {% block content %}{% endblock content %}
-  </main>
-
-  <footer>
-    {% block footer %}{% endblock footer %}
-  </footer>
-
+  {% block content %}{% endblock content %}
+  {% block footer %}{% endblock footer %}
   {% block extra_js %}{% endblock %}
 </body>
 

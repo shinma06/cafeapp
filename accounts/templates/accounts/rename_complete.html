@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}WCB Cafe - RENAME{% endblock title %}
+{% block title %}Cafe-App - RENAME{% endblock title %}
 
 {% block id %}accounts{% endblock id %}
 
-{% block wrapper %}home-content{% endblock wrapper %}
+{% block wrapper %}home-content text-center mt-[10%]{% endblock wrapper %}
 
 {% block page %}RENAME COMPLETE{% endblock page %}
 
 {% block paragraph %}
-    <p>ユーザー名が変更されました。</p>
-    <a class="button" href="{% url 'accounts:account' %}">アカウントに戻る</a>
+    <p class="text-lg my-[10px] mx-0 mb-[42px]">ユーザー名が変更されました。</p>
+    <a class="btn-primary inline-block" href="{% url 'accounts:account' %}">アカウントに戻る</a>
 {% endblock paragraph %}
