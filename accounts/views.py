@@ -1,22 +1,34 @@
-from django.contrib.auth.decorators import login_required
+from typing import Any
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import generic
-from .forms import SignupForm, LoginForm, RenameForm
-from django.http import Http404
 
-# 新規登録
+from .forms import SignupForm, LoginForm, RenameForm
+
+
+class ReferrerRequiredMixin:
+    """リファラーが必要なビューに使用するMixin"""
+    
+    def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if not request.META.get('HTTP_REFERER'):
+            raise Http404("Page not found")
+        return super().dispatch(request, *args, **kwargs)
+
+
 class SignupView(generic.View):
+    """ユーザー新規登録ビュー"""
     template_name = 'accounts/signup.html'
 
-    def get(self, request):
+    def get(self, request: HttpRequest) -> HttpResponse:
         if request.user.is_authenticated:
             return redirect('pages:index')
 
         form = SignupForm()
         return render(request, self.template_name, {'form': form})
 
-    def post(self, request):
+    def post(self, request: HttpRequest) -> HttpResponse:
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -25,26 +37,25 @@ class SignupView(generic.View):
             login(request, user)
             return redirect('accounts:signup_complete')
         return render(request, self.template_name, {'form': form})
-    
-# 新規登録成功
-class SignupCompleteView(generic.TemplateView):
+
+
+class SignupCompleteView(ReferrerRequiredMixin, generic.TemplateView):
+    """新規登録完了ビュー"""
     template_name = 'accounts/signup_complete.html'
 
-    def dispatch(self, *args, **kwargs):
-        if not self.request.META.get('HTTP_REFERER'):
-            raise Http404("Page not found")
-        return super().dispatch(*args, **kwargs)
 
-# ログイン
 class LoginView(generic.View):
-    def get(self, request):
+    """ログインビュー"""
+    template_name = 'accounts/login.html'
+
+    def get(self, request: HttpRequest) -> HttpResponse:
         if request.user.is_authenticated:
             return redirect('pages:index')
 
         form = LoginForm()
-        return render(request, 'accounts/login.html', {'form': form})
+        return render(request, self.template_name, {'form': form})
 
-    def post(self, request):
+    def post(self, request: HttpRequest) -> HttpResponse:
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
@@ -54,39 +65,30 @@ class LoginView(generic.View):
                 login(request, user)
                 return redirect('accounts:login_complete')
             else:
-                form.add_error(None, 'ユーザー名かパスワードが間違っています.')
-        return render(request, 'accounts/login.html', {'form': form})
+                form.add_error(None, 'ユーザー名かパスワードが間違っています。')
+        return render(request, self.template_name, {'form': form})
 
-# ログイン成功
-class LoginCompleteView(generic.TemplateView):
+
+class LoginCompleteView(ReferrerRequiredMixin, generic.TemplateView):
+    """ログイン完了ビュー"""
     template_name = 'accounts/login_complete.html'
 
-    def dispatch(self, *args, **kwargs):
-        if not self.request.META.get('HTTP_REFERER'):
-            raise Http404("Page not found")
-        return super().dispatch(*args, **kwargs)
 
-# ログアウト成功
-class LogoutCompleteView(generic.TemplateView):
+class LogoutCompleteView(ReferrerRequiredMixin, generic.TemplateView):
+    """ログアウト完了ビュー"""
     template_name = 'accounts/logout_complete.html'
 
-    def dispatch(self, *args, **kwargs):
-        if not self.request.META.get('HTTP_REFERER'):
-            raise Http404("Page not found")
-        return super().dispatch(*args, **kwargs)
 
-# アカウントページ
-class AccountEditView(generic.View):
+class AccountEditView(LoginRequiredMixin, generic.View):
+    """アカウント編集ビュー"""
     template_name = 'accounts/account_edit.html'
+    login_url = 'accounts:login'
 
-    def get(self, request):
-        if not request.user.is_authenticated:
-            return redirect('accounts:login')
-
+    def get(self, request: HttpRequest) -> HttpResponse:
         form = RenameForm(initial={'username': request.user.username})
         return render(request, self.template_name, {'form': form})
 
-    def post(self, request):
+    def post(self, request: HttpRequest) -> HttpResponse:
         form = RenameForm(request.POST)
         if form.is_valid():
             new_username = form.cleaned_data['username']
@@ -96,11 +98,7 @@ class AccountEditView(generic.View):
 
         return render(request, self.template_name, {'form': form})
 
-# ユーザーID変更成功
-class RenameCompleteView(generic.TemplateView):
-    template_name = 'accounts/rename_complete.html'
 
-    def dispatch(self, *args, **kwargs):
-        if not self.request.META.get('HTTP_REFERER'):
-            raise Http404("Page not found")
-        return super().dispatch(*args, **kwargs)
+class RenameCompleteView(ReferrerRequiredMixin, generic.TemplateView):
+    """ユーザー名変更完了ビュー"""
+    template_name = 'accounts/rename_complete.html'

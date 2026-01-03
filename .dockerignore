@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+/media/
+/static/
+*.pot
+
+# 環境変数
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# データベースデータ
+data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ドキュメント
+README.md
+*.md
+
+# テスト
+.pytest_cache/
+.coverage
+htmlcov/
+

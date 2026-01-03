@@ -1,70 +1,110 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    {% block extra_head %}{% endblock %}
-    <title>{% block title %}{% endblock title %}</title><!-- タイトル -->
-    <meta name="description" content="ブレンドコーヒーとヘルシーなオーガニックフードを提供するカフェ">
-    <link rel="icon" href="{% static 'pages/images/favicon.png' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Philosopher">
-    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/style.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- SEO -->
+  <title>{% block title %}WEBカフェ{% endblock title %}</title>
+  <meta name="description" content="ブレンドコーヒーとヘルシーなオーガニックフードを提供するカフェ">
+  <meta name="keywords" content="カフェ,コーヒー,オーガニック,予約">
+
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'pages/images/favicon.png' %}">
+
+  <!-- CSS Reset -->
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Philosopher&display=swap">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'pages/css/style.css' %}">
+
+  {% block extra_head %}{% endblock %}
 </head>
+
 <body>
-    <div id="{% block id %}{% endblock id %}" class="big-bg"><!-- id -->
-        <header class="page-header wrapper">
-            <h1>
-                <a href="{% url 'pages:index' %}">
-                    <img class="logo" src="{% static 'pages/images/logo.svg' %}" alt="WEBカフェ ホーム">
-                </a>
-            </h1>
-            <nav>
-                <ul class="main-nav">
-                    <li class="nav-single">
-                        {% if user.is_superuser %}
-                            <a href="{% url 'pages:menu' %}" class="init-bottom">Menu</a>
-                            <ul class="nav-second">
-                                <li><a href="{% url 'pages:menu-create' %}">Create</a></li>
-                                <li><a href="/admin/pages/menu/" target="_blank">Edit</a></li>
-                            </ul>
-                        {% else %}
-                            <a href="{% url 'pages:menu' %}">Menu</a>
-                        {% endif %}
-                    </li>
-                    <li class="nav-single">
-                        {% if user.is_superuser %}
-                            <a href="{% url 'pages:news' %}" class="init-bottom">News</a>
-                            <ul class="nav-second">
-                                <li><a href="{% url 'pages:news-create' %}">Create</a></li>
-                                <li><a href="/admin/pages/news/" target="_blank">Edit</a></li>
-                            </ul>
-                        {% else %}
-                            <a href="{% url 'pages:news' %}">News</a>
-                        {% endif %}
-                    </li>
-                    {% if user.is_superuser %}
-                        <!-- superuserの場合は後に別の～ページにリンクさせる -->
-                        <li><a href="{% url 'pages:booking-list' %}">Booking</a></li>
-                    {% else %}
-                        <li><a href="{% url 'pages:booking' %}">Booking</a></li>
-                    {% endif %}
-                    <li><a href="{% url 'pages:contact' %}">Contact</a></li>
-                    {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'accounts:account' %}">Accounts</a></li>
-                    {% else %}
-                        <li><a href="{% url 'accounts:login' %}">Login</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </header>
-        <div class="wrapper {% block wrapper %}{% endblock wrapper %}">
-            <h2 class="page-title">{% block page %}{% endblock page %}</h2><!-- page-title -->
-            {% block paragraph %}{% endblock paragraph %}
-        </div>
+  <div id="{% block id %}{% endblock id %}" class="big-bg">
+    <header class="page-header wrapper">
+      <h1 class="logo-wrapper">
+        <a href="{% url 'pages:index' %}" aria-label="WEBカフェ ホーム">
+          <img class="logo" src="{% static 'pages/images/logo.svg' %}" alt="WEBカフェ ロゴ">
+        </a>
+      </h1>
+
+      <nav aria-label="メインナビゲーション">
+        <ul class="main-nav">
+          <!-- メニュー -->
+          <li class="nav-single">
+            {% if user.is_superuser %}
+            <a href="{% url 'pages:menu' %}" class="init-bottom">Menu</a>
+            <ul class="nav-second">
+              <li><a href="{% url 'pages:menu-create' %}">Create</a></li>
+              <li><a href="/admin/pages/menu/" target="_blank" rel="noopener noreferrer">Edit</a></li>
+            </ul>
+            {% else %}
+            <a href="{% url 'pages:menu' %}">Menu</a>
+            {% endif %}
+          </li>
+
+          <!-- ニュース -->
+          <li class="nav-single">
+            {% if user.is_superuser %}
+            <a href="{% url 'pages:news' %}" class="init-bottom">News</a>
+            <ul class="nav-second">
+              <li><a href="{% url 'pages:news-create' %}">Create</a></li>
+              <li><a href="/admin/pages/news/" target="_blank" rel="noopener noreferrer">Edit</a></li>
+            </ul>
+            {% else %}
+            <a href="{% url 'pages:news' %}">News</a>
+            {% endif %}
+          </li>
+
+          <!-- 予約 -->
+          <li>
+            {% if user.is_superuser %}
+            <a href="{% url 'pages:booking-list' %}">Booking</a>
+            {% else %}
+            <a href="{% url 'pages:booking' %}">Booking</a>
+            {% endif %}
+          </li>
+
+          <!-- お問い合わせ -->
+          <li><a href="{% url 'pages:contact' %}">Contact</a></li>
+
+          <!-- アカウント -->
+          <li>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'accounts:account' %}">Accounts</a>
+            {% else %}
+            <a href="{% url 'accounts:login' %}">Login</a>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="wrapper {% block wrapper %}{% endblock wrapper %}">
+      <h2 class="page-title">{% block page %}{% endblock page %}</h2>
+      {% block paragraph %}{% endblock paragraph %}
     </div>
+  </div>
+
+  <main>
     {% block content %}{% endblock content %}
+  </main>
+
+  <footer>
     {% block footer %}{% endblock footer %}
+  </footer>
+
+  {% block extra_js %}{% endblock %}
 </body>
+
 </html>

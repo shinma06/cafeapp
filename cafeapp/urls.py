@@ -19,10 +19,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from .health_check import health_check, readiness_check, liveness_check
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('', include('pages.urls')),
+    
+    # ヘルスチェックエンドポイント
+    path('health/', health_check, name='health_check'),
+    path('ready/', readiness_check, name='readiness_check'),
+    path('alive/', liveness_check, name='liveness_check'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

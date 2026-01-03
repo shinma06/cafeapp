@@ -1,4 +1,17 @@
-django>=4.2.4
-mysqlclient>=2.2.0
-pillow>=10.0.0
-jpholiday
+# Django フレームワーク
+django>=5.1.0,<5.2.0
+
+# データベースクライアント
+mysqlclient>=2.2.4,<2.3.0
+
+# 画像処理
+pillow>=11.0.0,<12.0.0
+
+# 日本の祝日対応
+jpholiday>=1.0.0,<2.0.0
+
+# WSGI HTTPサーバー（本番環境用）
+gunicorn>=23.0.0,<24.0.0
+
+# セキュリティとパフォーマンス
+python-dotenv>=1.0.1,<2.0.0
