@@ -26,19 +26,19 @@
 
 ### コンテナ構成
 ```
-cafe-app-postgres   ← PostgreSQL 16 Alpine
-cafe-app-web        ← Django 5.1 + Python 3.12
+cafeapp-postgres   ← PostgreSQL 16 Alpine
+cafeapp-web        ← Django 5.1 + Python 3.12
 ```
 
 ### ファイル構成
 ```
-cafe-app/
+cafeapp/
 ├── docker-compose.yml    (25行 - シンプル)
 ├── Dockerfile            (25行 - シンプル)
 ├── Dockerfile.node       (Tailwindビルド用)
 ├── Makefile              (便利コマンド)
 ├── requirements.txt      (最小限の依存関係)
-├── cafe-app/              (Django設定)
+├── cafeapp/              (Django設定)
 ├── pages/                (メインアプリ)
 ├── accounts/             (認証アプリ)
 ├── static/
@@ -127,7 +127,7 @@ colors: {
 
 ```yaml
 environment:
-  DATABASE_URL: postgres://shinma:0103@postgres:5432/cafe-app
+  DATABASE_URL: postgres://shinma:0103@postgres:5432/cafeapp
   DJANGO_DEBUG: "True"
   DJANGO_SECRET_KEY: django-insecure-dev-key-change-in-production
 ```

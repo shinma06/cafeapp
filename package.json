@@ -1,7 +1,7 @@
 {
-    "name": "cafe-app",
+    "name": "cafeapp",
     "version": "1.0.0",
-    "description": "Cafe-App with Tailwind CSS",
+    "description": "CafeApp with Tailwind CSS",
     "scripts": {
         "build:css": "tailwindcss -i ./static/src/input.css -o ./static/dist/output.css --minify",
         "watch:css": "tailwindcss -i ./static/src/input.css -o ./static/dist/output.css --watch"

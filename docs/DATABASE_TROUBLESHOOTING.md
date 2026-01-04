@@ -12,12 +12,12 @@
 docker compose down -v
 
 # 2. ボリュームが確実に削除されたか確認
-docker volume ls | grep cafe-app
+docker volume ls | grep cafeapp
 
 # 3. 残っている場合は手動で削除
-docker volume rm cafe-app_mysql_data
-docker volume rm cafe-app_static_volume
-docker volume rm cafe-app_media_volume
+docker volume rm cafeapp_mysql_data
+docker volume rm cafeapp_static_volume
+docker volume rm cafeapp_media_volume
 
 # 4. dataディレクトリがあれば削除（以前の設定で使用されていた場合）
 rm -rf data/
@@ -115,9 +115,9 @@ docker compose down -v
 
 # Dockerボリュームを確認して削除
 echo "📦 ボリュームを削除中..."
-docker volume rm cafe-app_mysql_data 2>/dev/null || true
-docker volume rm cafe-app_static_volume 2>/dev/null || true
-docker volume rm cafe-app_media_volume 2>/dev/null || true
+docker volume rm cafeapp_mysql_data 2>/dev/null || true
+docker volume rm cafeapp_static_volume 2>/dev/null || true
+docker volume rm cafeapp_media_volume 2>/dev/null || true
 
 # dataディレクトリがあれば削除
 if [ -d "data" ]; then
@@ -155,10 +155,10 @@ make rebuild    # clean + setup を実行
 
 ```bash
 # バックアップ
-docker exec cafe-app-mysql mysqldump -u root -p0103 cafe-app > backup_$(date +%Y%m%d).sql
+docker exec cafeapp-mysql mysqldump -u root -p0103 cafeapp > backup_$(date +%Y%m%d).sql
 
 # リストア
-docker exec -i cafe-app-mysql mysql -u root -p0103 cafe-app < backup_YYYYMMDD.sql
+docker exec -i cafeapp-mysql mysql -u root -p0103 cafeapp < backup_YYYYMMDD.sql
 ```
 
 ## トラブルシューティングチェックリスト

@@ -5,7 +5,7 @@
 ### 1. **マイグレーションエラー: "Table already exists"**
 
 **原因:**
-- 古いDockerボリューム（`cafe-app_mysql_data`）に以前のデータベースデータが残っていた
+- 古いDockerボリューム（`cafeapp_mysql_data`）に以前のデータベースデータが残っていた
 - `docker compose down`だけでは`-v`オプションがないとボリュームが削除されない
 - `make clean`を実行しても、実行前に作成されたボリュームが残る場合がある
 
@@ -36,10 +36,10 @@ MySQLdb.OperationalError: (1050, "Table 'auth_permission' already exists")
 docker compose down -v
 
 # ボリュームの確認と削除
-docker volume ls | grep cafe-app
-docker volume rm cafe-app_mysql_data
-docker volume rm cafe-app_static_volume
-docker volume rm cafe-app_media_volume
+docker volume ls | grep cafeapp
+docker volume rm cafeapp_mysql_data
+docker volume rm cafeapp_static_volume
+docker volume rm cafeapp_media_volume
 
 # 再構築
 docker compose build
@@ -95,9 +95,9 @@ setup: build up migrate
 ```bash
 $ docker compose ps
 NAME            STATUS
-cafe-app-mysql   Up (healthy)    # ✅ 正常
-cafe-app-web     Up (healthy)    # ✅ 正常
-cafe-app-tailwind Up              # ✅ 正常（watchモード）
+cafeapp-mysql   Up (healthy)    # ✅ 正常
+cafeapp-web     Up (healthy)    # ✅ 正常
+cafeapp-tailwind Up              # ✅ 正常（watchモード）
 ```
 
 ### マイグレーション
@@ -144,7 +144,7 @@ $ docker compose logs tailwind
 
 3. **ボリュームの確認**
    ```bash
-   docker volume ls | grep cafe-app
+   docker volume ls | grep cafeapp
    ```
 
 4. **コンテナの状態確認**

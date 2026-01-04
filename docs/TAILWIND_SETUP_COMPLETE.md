@@ -19,7 +19,7 @@
 - ✅ ドロップダウンメニュー（hover効果）実装
 
 ### 4. ビルドシステムの統合
-- ✅ Makefileに`tailwind-build`と`tailwind-watch`コマンド追加
+- ✅ Makefileに`tailwind`コマンド追加
 - ✅ `make setup`にTailwindビルドを統合
 - ✅ `.gitignore`と`.dockerignore`を更新
 
@@ -38,17 +38,14 @@ make setup
 # または個別に
 docker compose build
 docker compose up -d
-make tailwind-build
+make tailwind
 ```
 
 ### Tailwind CSS の開発
 
 ```bash
-# watchモード（ファイル変更を自動検知）
-make tailwind-watch
-
-# 手動ビルド
-make tailwind-build
+# Tailwind CSSをビルド
+make tailwind
 ```
 
 ### コンテナの管理
@@ -56,9 +53,6 @@ make tailwind-build
 ```bash
 # すべてのコンテナを起動
 docker compose up -d
-
-# Tailwindコンテナのログを確認
-docker compose logs -f tailwind
 
 # コンテナの状態確認
 docker compose ps
@@ -179,26 +173,19 @@ Tailwindのブレークポイント：
 ### Tailwind CSSが反映されない
 
 ```bash
-# Tailwindコンテナを再起動
-docker compose restart tailwind
-
 # 手動でビルド
-make tailwind-build
+make tailwind
 
-# キャッシュをクリア
-docker compose down
-docker compose build --no-cache tailwind
-docker compose up -d
+# キャッシュをクリアして再ビルド
+docker build -f Dockerfile.node -t cafeapp-tailwind . --no-cache
+make tailwind
 ```
 
 ### ファイル変更が検知されない
 
 ```bash
-# watchモードを確認
-docker compose logs tailwind
-
-# 再起動
-docker compose restart tailwind
+# Tailwindを再ビルド
+make tailwind
 ```
 
 ### CSSが古いまま

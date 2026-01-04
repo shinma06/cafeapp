@@ -102,19 +102,15 @@ Tailwindのレスポンシブユーティリティを使用：
 
 ## ビルドプロセス
 
-### 開発モード（Watch）
+### ビルド
 ```bash
-make tailwind-watch
-# または
-docker compose exec tailwind npm run watch:css
+make tailwind
 ```
 
-### プロダクションビルド
-```bash
-make tailwind-build
-# または
-docker compose exec tailwind npm run build:css
-```
+このコマンドは以下を実行します：
+1. `Dockerfile.node`からTailwind用のDockerイメージをビルド
+2. コンテナを実行してTailwind CSSをビルド
+3. ビルドされたCSSを`static/dist/output.css`に出力
 
 ### 出力ファイル
 - 入力: `static/src/input.css`

@@ -35,7 +35,7 @@ shell:
 	docker compose exec web bash
 
 dbshell:
-	docker compose exec postgres psql -U shinma -d cafe_app
+	docker compose exec postgres psql -U shinma -d cafeapp
 
 migrate:
 	docker compose exec web python manage.py migrate
@@ -44,18 +44,33 @@ createsuperuser:
 	docker compose exec web python manage.py createsuperuser
 
 tailwind:
-	docker build -f Dockerfile.node -t cafe-app-tailwind .
-	docker run --rm -v $(PWD)/static:/app/static cafe-app-tailwind npm run build:css
+	docker build -f Dockerfile.node -t cafeapp-tailwind .
+	docker run --rm -v $(PWD)/static:/app/static cafeapp-tailwind npm run build:css
 	@echo "✅ Tailwind CSSをビルドしました"
 
 clean:
 	docker compose down -v
+	@echo "古いコンテナ（cafe-app-*）を削除中..."
+	@docker ps -a --filter "name=cafe-app" --format "{{.Names}}" | xargs -r docker rm -f 2>/dev/null || true
 	docker volume prune -f
 
 setup: clean tailwind build up
+	@echo "コンテナの起動を待っています..."
+	@sleep 8
 	@echo "データベースの準備を待っています..."
-	@sleep 5
-	@docker compose exec web python manage.py migrate
+	@timeout=30; \
+	while [ $$timeout -gt 0 ]; do \
+		if docker compose exec -T web python manage.py migrate 2>/dev/null; then \
+			break; \
+		fi; \
+		echo "コンテナの準備中... (残り $$timeout 秒)"; \
+		sleep 2; \
+		timeout=$$((timeout - 2)); \
+	done; \
+	if [ $$timeout -le 0 ]; then \
+		echo "⚠️  タイムアウト: 手動でマイグレーションを実行してください: make migrate"; \
+		exit 1; \
+	fi
 	@echo ""
 	@echo "✅ セットアップ完了！"
 	@echo "   http://localhost:8000"

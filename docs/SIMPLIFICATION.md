@@ -21,7 +21,7 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: cafe-app
+      POSTGRES_DB: cafeapp
       POSTGRES_USER: shinma
       POSTGRES_PASSWORD: "0103"
     healthcheck:
@@ -34,7 +34,7 @@ services:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     environment:
-      DATABASE_URL: postgres://shinma:0103@postgres:5432/cafe-app
+      DATABASE_URL: postgres://shinma:0103@postgres:5432/cafeapp
     depends_on:
       postgres:
         condition: service_healthy
@@ -65,7 +65,7 @@ services:
 
 ```python
 # シンプルな設定
-DATABASE_URL = os.environ.get('DATABASE_URL', 'postgres://shinma:0103@postgres:5432/cafe-app')
+DATABASE_URL = os.environ.get('DATABASE_URL', 'postgres://shinma:0103@postgres:5432/cafeapp')
 DATABASES = {
     'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 }
@@ -179,7 +179,7 @@ services:
   
   web:
     environment:
-      DATABASE_URL: postgres://shinma:新しいパスワード@postgres:5432/cafe-app
+      DATABASE_URL: postgres://shinma:新しいパスワード@postgres:5432/cafeapp
 ```
 
 ## パフォーマンス

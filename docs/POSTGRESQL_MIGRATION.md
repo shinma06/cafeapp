@@ -37,7 +37,7 @@ psycopg2-binary>=2.9.9,<3.0.0
 - ヘルスチェック:
   - `mysqladmin ping` → `pg_isready`
 
-### 3. `cafe-app/settings.py`
+### 3. `cafeapp/settings.py`
 ```python
 # 変更前
 'ENGINE': 'django.db.backends.mysql'
@@ -64,14 +64,14 @@ psycopg2-binary>=2.9.9,<3.0.0
 ### 5. `env.sample`
 ```bash
 # 変更前
-MYSQL_DATABASE=cafe-app
+MYSQL_DATABASE=cafeapp
 MYSQL_USER=shinma
 MYSQL_PASSWORD=0103
 MYSQL_ROOT_PASSWORD=0103
 MYSQL_PORT=3306
 
 # 変更後
-POSTGRES_DB=cafe-app
+POSTGRES_DB=cafeapp
 POSTGRES_USER=shinma
 POSTGRES_PASSWORD=0103
 POSTGRES_PORT=5432
@@ -94,7 +94,7 @@ dbshell:
 
 # 変更後
 dbshell:
-	docker compose exec postgres psql -U shinma -d cafe-app
+	docker compose exec postgres psql -U shinma -d cafeapp
 ```
 
 ## 移行手順
@@ -104,7 +104,7 @@ dbshell:
 1. **データのバックアップ（必要に応じて）**
    ```bash
    # MySQLからデータをダンプ（移行前に実行する場合）
-   docker compose exec mysql mysqldump -u root -p cafe-app > backup.sql
+   docker compose exec mysql mysqldump -u root -p cafeapp > backup.sql
    ```
 
 2. **完全クリーンアップ**
@@ -135,7 +135,7 @@ dbshell:
 make dbshell
 
 # 直接実行
-docker compose exec postgres psql -U shinma -d cafe-app
+docker compose exec postgres psql -U shinma -d cafeapp
 ```
 
 #### よく使うpsqlコマンド
@@ -195,7 +195,7 @@ make clean
 
 # ボリュームを手動で削除
 docker volume ls | grep postgres
-docker volume rm cafe-app_postgres_data
+docker volume rm cafeapp_postgres_data
 
 # 再セットアップ
 make setup
@@ -226,7 +226,7 @@ PostgreSQL環境で使用する環境変数：
 
 ```bash
 # データベース設定
-POSTGRES_DB=cafe-app           # データベース名
+POSTGRES_DB=cafeapp           # データベース名
 POSTGRES_USER=shinma          # ユーザー名
 POSTGRES_PASSWORD=0103        # パスワード
 POSTGRES_PORT=5432            # ポート番号

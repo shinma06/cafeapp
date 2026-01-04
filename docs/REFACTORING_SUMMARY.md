@@ -2,7 +2,7 @@
 
 ## 概要
 
-Cafe-Appプロジェクトの全面的なリファクタリングが完了しました。機能やUIの意図は変更せず、コード品質、保守性、セキュリティ、パフォーマンスを大幅に改善しました。
+CafeAppプロジェクトの全面的なリファクタリングが完了しました。機能やUIの意図は変更せず、コード品質、保守性、セキュリティ、パフォーマンスを大幅に改善しました。
 
 ## 📋 変更されたファイル一覧
 
@@ -16,9 +16,9 @@ Cafe-Appプロジェクトの全面的なリファクタリングが完了しま
 
 ### 📦 Python/Django設定
 - ✅ `requirements.txt` - 最新バージョン、新パッケージ追加
-- ✅ `cafe-app/settings.py` - 環境変数対応、セキュリティ強化
-- ✅ `cafe-app/urls.py` - ヘルスチェックエンドポイント追加
-- ✅ `cafe-app/health_check.py` - ヘルスチェック機能（新規）
+- ✅ `cafeapp/settings.py` - 環境変数対応、セキュリティ強化
+- ✅ `cafeapp/urls.py` - ヘルスチェックエンドポイント追加
+- ✅ `cafeapp/health_check.py` - ヘルスチェック機能（新規）
 
 ### 🎨 pagesアプリ
 - ✅ `pages/models.py` - TextChoices、バリデーター、インデックス
@@ -53,8 +53,8 @@ Cafe-Appプロジェクトの全面的なリファクタリングが完了しま
 ```dockerfile
 FROM python:3.11.4
 RUN apt-get update
-RUN mkdir /cafe-app
-WORKDIR /cafe-app
+RUN mkdir /cafeapp
+WORKDIR /cafeapp
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 ```
@@ -170,7 +170,7 @@ make setup  # 初期セットアップ一括実行
 ## 🔒 セキュリティ強化
 
 1. **非rootユーザーでのコンテナ実行**
-   - UID 1000の`cafe-app`ユーザーを作成
+   - UID 1000の`cafeapp`ユーザーを作成
    
 2. **環境変数による機密情報管理**
    - シークレットキー、パスワードを`.env`で管理
@@ -281,7 +281,7 @@ make setup  # 初期セットアップ一括実行
 
 ## 🎉 まとめ
 
-このリファクタリングにより、Cafe-Appは以下の点で大幅に改善されました：
+このリファクタリングにより、CafeAppは以下の点で大幅に改善されました：
 
 - ✅ **保守性**: コードが読みやすく、変更しやすくなった
 - ✅ **セキュリティ**: 本番環境に対応できるセキュリティレベル

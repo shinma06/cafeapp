@@ -1,12 +1,12 @@
-# Cafe-App
+# CafeApp
 
 ## 概要
 
-Cafe-Appは、架空のカフェのウェブアプリケーションです。DjangoとMySQLを使用し、Dockerを利用して環境を構築しました。このプロジェクトは、学習目的で作成しました。
+CafeAppは、架空のカフェのウェブアプリケーションです。DjangoとPostgreSQLを使用し、Dockerを利用して環境を構築しました。このプロジェクトは、学習目的で作成しました。
 
 ## 機能説明
 
-Cafe-Appでは、従業員側とユーザー側の機能が分けられています。
+CafeAppでは、従業員側とユーザー側の機能が分けられています。
 
 ### 従業員側の機能
 
@@ -29,7 +29,7 @@ Cafe-Appでは、従業員側とユーザー側の機能が分けられていま
 
 - **Python**: 3.12
 - **Django**: 5.1+
-- **MySQL**: 8.0
+- **PostgreSQL**: 16-alpine
 - **Docker Compose**: 最新版
 - **Tailwind CSS**: 3.4+
 - **Node.js**: 20 (Tailwindビルド用)
@@ -45,33 +45,34 @@ Cafe-Appでは、従業員側とユーザー側の機能が分けられていま
 1. リポジトリをクローン
 
 ```bash
-git clone https://github.com/shinma06/cafe-app
-cd cafe-app
+git clone https://github.com/shinma06/cafeapp
+cd cafeapp
 ```
 
-2. 環境変数の設定
+2. セットアップ（推奨）
 
 ```bash
-cp env.sample .env
-# .envファイルを編集して必要な設定を行ってください
+make setup
 ```
 
-3. Dockerコンテナのビルドと起動
+このコマンドは以下を自動実行します：
+- 環境のクリーンアップ
+- Tailwind CSSのビルド
+- Dockerイメージのビルド
+- コンテナの起動
+- データベースマイグレーション
+
+3. 手動セットアップ（オプション）
 
 ```bash
+# Dockerコンテナのビルドと起動
 docker compose build
 docker compose up -d
-```
 
-4. データベースのマイグレーション（初回のみ）
-
-```bash
+# データベースのマイグレーション
 docker compose exec web python manage.py migrate
-```
 
-5. 静的ファイルの収集（必要に応じて）
-
-```bash
+# 静的ファイルの収集（必要に応じて）
 docker compose exec web python manage.py collectstatic --noinput
 ```
 
@@ -92,23 +93,23 @@ docker ps
 出力例：
 
 ```
-CONTAINER ID   IMAGE         COMMAND                   CREATED      STATUS          PORTS                               NAMES
-xxxxxxxxxxxx   cafe-app-web   "./combined_script.sh"    x days ago   Up x minutes   0.0.0.0:8000->8000/tcp              cafe-app-web
-xxxxxxxxxxxx   mysql:8.0     "docker-entrypoint.s…"   x days ago   Up x minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   cafe-app-mysql
+CONTAINER ID   IMAGE                COMMAND                  CREATED      STATUS          PORTS                               NAMES
+xxxxxxxxxxxx   my-cafe-app-web      "python manage.py ru…"   x days ago   Up x minutes   0.0.0.0:8000->8000/tcp              cafeapp-web
+xxxxxxxxxxxx   postgres:16-alpine   "docker-entrypoint.s…"   x days ago   Up x minutes   0.0.0.0:5432->5432/tcp            cafeapp-postgres
 ```
 
 2. Djangoのスーパーユーザーを作成
 
-Cafe-Appのコンテナ内でDjangoのスーパーユーザーを作成するために、以下のコマンドを実行します。ここで`xxx`は`docker ps`コマンドの出力で表示されたcafe-app-webコンテナのCONTAINER IDの頭文字2～3文字に置き換えてください。
+以下のコマンドでスーパーユーザーを作成できます：
 
 ```bash
-docker exec -it xxx bash
+make createsuperuser
 ```
 
-次に、Djangoのスーパーユーザーを作成します。
+または、手動で実行する場合：
 
 ```bash
-python manage.py createsuperuser
+docker compose exec web python manage.py createsuperuser
 ```
 
 以下の手順でユーザー情報を入力します：
@@ -153,7 +154,7 @@ docker compose logs
 
 # 特定のサービスのログ
 docker compose logs web
-docker compose logs mysql
+docker compose logs postgres
 
 # リアルタイムでログを追跡
 docker compose logs -f web
@@ -173,55 +174,64 @@ docker compose exec web python manage.py migrate
 docker compose exec web python manage.py test
 
 # Tailwind CSSのビルド
-make tailwind-build
+make tailwind
 
-# Tailwind CSSのwatchモード（開発時）
-make tailwind-watch
+# データベースシェル
+make dbshell
 ```
 
 ## プロジェクト構造
 
 ```
-cafe-app/
+cafeapp/
 ├── accounts/           # ユーザー認証アプリ
 ├── pages/              # メインアプリ（メニュー、ニュース、予約等）
-├── cafe-app/            # プロジェクト設定
+├── cafeapp/            # プロジェクト設定
 ├── templates/          # テンプレートファイル
 ├── static/             # 静的ファイル
 │   ├── src/            # Tailwind CSSソース
 │   └── dist/           # Tailwind CSSビルド出力
 ├── media/              # アップロードされたメディアファイル
-├── docker/             # Docker関連設定
-│   └── mysql/
-│       └── conf.d/     # MySQL設定ファイル
+├── docs/               # プロジェクトドキュメント
 ├── Dockerfile          # Djangoイメージ定義
 ├── Dockerfile.node     # Node.js/Tailwindイメージ定義
 ├── docker-compose.yml  # Docker Compose設定
+├── Makefile            # 便利コマンド集
 ├── requirements.txt    # Pythonパッケージ
 ├── package.json        # Node.jsパッケージ
 ├── tailwind.config.js  # Tailwind CSS設定
-├── env.sample          # 環境変数サンプル
 └── README.md           # このファイル
 ```
 
+詳細なドキュメントは`docs/`ディレクトリを参照してください。
+
 ## 環境変数
 
-プロジェクトで使用する主な環境変数は`env.sample`を参照してください。本番環境では必ず以下の設定を変更してください：
+`docker-compose.yml`で以下の環境変数が設定されています。本番環境では必ず以下の設定を変更してください：
 
 - `DJANGO_SECRET_KEY`: 秘密鍵（ランダムな文字列）
 - `DJANGO_DEBUG`: False に設定
 - `DJANGO_ALLOWED_HOSTS`: 実際のホスト名に設定
-- `MYSQL_PASSWORD`、`MYSQL_ROOT_PASSWORD`: 強力なパスワードに変更
+- `POSTGRES_PASSWORD`: 強力なパスワードに変更
+- `DATABASE_URL`: PostgreSQL接続URL
 
 ## トラブルシューティング
 
 ### データベース接続エラー
 
-MySQLコンテナが完全に起動するまで待つ必要があります。`docker compose logs mysql`でログを確認してください。
+PostgreSQLコンテナが完全に起動するまで待つ必要があります。`docker compose logs postgres`でログを確認してください。
 
 ### ポートが既に使用されている
 
-ポート8000や3306が既に使用されている場合は、`.env`ファイルで`WEB_PORT`や`MYSQL_PORT`を変更してください。
+ポート8000や5432が既に使用されている場合は、`docker-compose.yml`でポート番号を変更してください。
+
+### 古いコンテナが残っている
+
+古いコンテナ（`cafe-app-*`）が残っている場合は、以下で削除できます：
+
+```bash
+make clean
+```
 
 ### 静的ファイルが読み込まれない
 

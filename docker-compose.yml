@@ -1,9 +1,9 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: cafe-app-postgres
+    container_name: cafeapp-postgres
     environment:
-      POSTGRES_DB: cafe_app
+      POSTGRES_DB: cafeapp
       POSTGRES_USER: shinma
       POSTGRES_PASSWORD: "0103"
     volumes:
@@ -11,17 +11,17 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U shinma -d cafe_app"]
+      test: ["CMD-SHELL", "pg_isready -U shinma -d cafeapp"]
       interval: 3s
       timeout: 3s
       retries: 5
 
   web:
     build: .
-    container_name: cafe-app-web
+    container_name: cafeapp-web
     command: python manage.py runserver 0.0.0.0:8000
     environment:
-      DATABASE_URL: postgres://shinma:0103@postgres:5432/cafe_app
+      DATABASE_URL: postgres://shinma:0103@postgres:5432/cafeapp
       DJANGO_DEBUG: "True"
       DJANGO_SECRET_KEY: django-insecure-dev-key-change-in-production
     volumes:
